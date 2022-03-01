@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=3003 node ./bin/www",
+    "start": "PORT=3003 nodemon ./bin/www",
     "lint": "standard --fix"
   },
   "dependencies": {
@@ -11,10 +11,12 @@
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-session": "^1.17.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.15",
     "standard": "^16.0.4"
   }
 }
