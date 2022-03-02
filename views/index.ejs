@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Generic Partner Example App</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Logged in as: <%= user.firstName %> <%= user.lastName %></h1>
+    <pre><%= JSON.stringify(user, null, 2) %></pre>
+    <a href="/logout">Logout</a>
   </body>
 </html>
