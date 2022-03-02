@@ -1,0 +1,7 @@
+{
+  "partnerId": "",
+  "signingKey": "",
+  "integrationKey": "",
+  "baseConnectUrl": "https://www.projectbroadcast.com/integrations/",
+  "baseApiUrl": "https://www.projectbroadcast.com/api/v1/"
+}
