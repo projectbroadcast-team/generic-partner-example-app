@@ -1,10 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const users = require('../users.js')
+const { signedConnectUrlForUser } = require('../lib/project-broadcast.js')
+const { apiKeyForUser } = require('../services/project-broadcast.js')
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
   if (req.session.user) {
-    res.render('index', { user: req.session.user })
+    const user = req.session.user
+    const signedConnectUrl = signedConnectUrlForUser(user)
+    const apiKey = await apiKeyForUser(user)
+    res.render('index', { user, signedConnectUrl, apiKey })
   } else {
     res.render('users', { users: users.all() })
   }
