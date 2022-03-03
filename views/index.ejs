@@ -6,9 +6,23 @@
   </head>
   <body>
     <h1>Logged in as: <%= user.firstName %> <%= user.lastName %></h1>
-    <pre><%= signedConnectUrl %></pre>
+    <% if (!apiKey) { %>
+      <a onclick="connectClick(this.href)" href="<%= signedConnectUrl %>" target="project-broadcast-connect">Connect</a>
+    <% } else { %>
     <pre>apiKey: <%= apiKey %></pre>
+    <% } %>
     <pre><%= JSON.stringify(user, null, 2) %></pre>
     <a href="/logout">Logout</a>
+
+    <script>
+      let windowRef
+      function connectClick (url) {
+        event.preventDefault()
+        if (!windowRef || windowRef.closed) {
+          windowRef = window.open(url, 'project-broadcast-connect', 'popup,width=600,height=550')
+        }
+        windowRef.focus()
+      }
+    </script>
   </body>
 </html>

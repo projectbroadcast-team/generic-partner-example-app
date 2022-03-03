@@ -15,6 +15,10 @@ router.get('/', async function (req, res, next) {
   }
 })
 
+router.get('/connection', function (req, res, next) {
+  res.render('connect')
+})
+
 router.get('/login/:userId', function (req, res, next) {
   const user = users.findById(req.params.userId)
   if (user) {
