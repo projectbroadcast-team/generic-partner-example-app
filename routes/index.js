@@ -17,8 +17,24 @@ router.get('/', async function (req, res, next) {
 
 router.get('/connection', function (req, res, next) {
   const isValidParams = areParamsValid(req.query)
-  if (!isValidParams) return res.send(401, 'Invalid request')
+  if (!isValidParams) return res.status(401).send('Invalid request')
   res.render('connect')
+})
+
+router.post('/hooks/connected', function (req, res, next) {
+  const isValidParams = areParamsValid(req.body)
+  if (!isValidParams) return res.status(401).send('Invalid request')
+  const { pcuid, apiKey } = req.body
+  console.log(`User connected: ${pcuid}, ${apiKey}`)
+  res.status(204).send("Success")
+})
+
+router.post('/hooks/disconnected', function (req, res, next) {
+  const isValidParams = areParamsValid(req.body)
+  if (!isValidParams) return res.status(401).send('Invalid request')
+  const { pcuid } = req.body
+  console.log(`User disconnected: ${pcuid}`)
+  res.status(204).send("Success")
 })
 
 router.get('/login/:userId', function (req, res, next) {
