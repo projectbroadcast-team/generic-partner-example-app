@@ -1,11 +1,15 @@
-const createError = require('http-errors')
-const express = require('express')
-const path = require('path')
-const cookieParser = require('cookie-parser')
-const logger = require('morgan')
-const session = require('express-session')
+import createError from 'http-errors'
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
+import session from 'express-session'
 
-const indexRouter = require('./routes/index')
+import indexRouter from './routes/index.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 
@@ -44,4 +48,4 @@ app.use(function (err, req, res, next) {
   res.render('error')
 })
 
-module.exports = app
+export default app

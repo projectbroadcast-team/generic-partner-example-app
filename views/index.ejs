@@ -5,13 +5,27 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Logged in as: <%= user.firstName %> <%= user.lastName %></h1>
-    <% if (!apiKey) { %>
-      <a onclick="connectClick(this.href)" href="<%= signedConnectUrl %>" target="project-broadcast-connect">Connect</a>
+    <h1>Logged in as <%= user.id %>: <%= user.firstName %> <%= user.lastName %> (<%= user.email %>)</h1>
+    <% if (!isConnected) { %>
+      <p>
+        This user is not currently connected.
+        <a onclick="connectClick(this.href)" href="<%= signedConnectUrl %>" target="project-broadcast-connect">Connect</a>
+      </p>
     <% } else { %>
-    <pre>apiKey: <%= apiKey %></pre>
+      <p>This user is connected.</p>
+      <dl>
+        <dt>Campaigns</dt>
+        <dd><%= totals.campaigns %></dd>
+        <dt>Contacts</dt>
+        <dd><%= totals.contacts %></dd>
+        <dt>Keywords</dt>
+        <dd><%= totals.keywords %></dd>
+        <dt>Templates</dt>
+        <dd><%= totals.templates %></dd>
+        <dt>Trackable Links</dt>
+        <dd><%= totals.trackableLinks %></dd>
+      </dl>
     <% } %>
-    <pre><%= JSON.stringify(user, null, 2) %></pre>
     <a href="/logout">Logout</a>
 
     <script>
