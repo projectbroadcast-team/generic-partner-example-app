@@ -28,7 +28,7 @@ export function findById (userId) {
   return db.data.users.find(({ id }) => userId === id)
 }
 
-export function updateUser(userId, updates) {
+export function updateUser (userId, updates) {
   const user = userId?.id ? userId : findById(userId)
   Object.assign(user, updates)
   db.write()

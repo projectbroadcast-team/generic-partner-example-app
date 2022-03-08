@@ -37,7 +37,7 @@ const search = async function (user, topic, term = '', page = 1, pageSize = 1) {
   const url = new URL(`${topic}/search`, config.get('baseApiUrl'))
   const response = await fetch(url, {
     method: 'POST',
-    headers :headersForUserApi(user),
+    headers: headersForUserApi(user),
     body: JSON.stringify({
       term,
       paging: {
