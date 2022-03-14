@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+import config from 'config'
 import app from '../app.js'
 import http from 'http'
 
@@ -11,7 +12,7 @@ import http from 'http'
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000')
+const port = normalizePort(config.get('port'))
 app.set('port', port)
 
 /**

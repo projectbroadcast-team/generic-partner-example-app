@@ -7,7 +7,7 @@
   },
   "type": "module",
   "scripts": {
-    "start": "PORT=3003 nodemon --ignore users.json ./bin/www.js",
+    "start": "nodemon --ignore users.json ./bin/www.js",
     "lint": "standard --fix",
     "lint-fix-staged": "npx lint-staged --verbose",
     "prepare": "husky install"
