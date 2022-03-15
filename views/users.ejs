@@ -9,7 +9,6 @@
     <% users.forEach((user) => { %>
       <div style="padding-bottom: 1rem; border-bottom: 1px solid #000;">
         <p><%= user.id %>: <%= user.firstName %> <%= user.lastName %> (<%= user.email %>)</p>
-        <p>User is <%= user.apiKey ? 'connected' : 'disconnected' %></p>
         <a href="/login/<%= user.id %>">Login as this user</a>
       </div>
     <% }) %>

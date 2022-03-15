@@ -9,7 +9,8 @@ const router = express.Router()
 router.get('/', async function (req, res, next) {
   if (req.session.userId) {
     const user = users.findById(req.session.userId)
-    const isConnected = !!user.apiKey
+    const apiKey = await apiKeyForUser(user)
+    const isConnected = !!apiKey
     const signedConnectUrl = signedConnectUrlForUser(user)
     const totals = {}
     if (isConnected) {
