@@ -10,6 +10,7 @@ router.get('/', async function (req, res, next) {
   if (req.session.userId) {
     const user = users.findById(req.session.userId)
     const apiKey = await apiKeyForUser(user)
+    users.updateUser(user.id, { apiKey })
     const isConnected = !!apiKey
     const signedConnectUrl = signedConnectUrlForUser(user)
     const totals = {}
