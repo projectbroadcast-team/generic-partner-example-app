@@ -47,7 +47,12 @@ const search = async function (user, topic, term = '', page = 1, pageSize = 1) {
     })
   })
 
-  if (!response.ok) { throw new Error('Unexpected response') }
+  if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('User unauthorized and may be suspended')
+    }
+    throw new Error('Unexpected response')
+  }
 
   const body = await response.json()
   return body
