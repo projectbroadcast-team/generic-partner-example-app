@@ -32,7 +32,7 @@ export const apiKeyForUser = async (user) => {
 }
 
 const search = async function (user, topic, term = '', page = 1, pageSize = 1) {
-  if (!user.apiKey) { throw new Error('USer is not connected') }
+  if (!user.apiKey) { throw new Error('User is not connected') }
 
   const url = new URL(`${topic}/search`, config.get('baseApiUrl'))
   const response = await fetch(url, {
