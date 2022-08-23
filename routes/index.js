@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { signedConnectUrlForUser, areParamsValid } from '../lib/project-broadcast.js'
+import { signedConnectUrlForUser, isValidRequest } from '../lib/project-broadcast.js'
 import { apiKeyForUser, totalCampaigns, totalContacts, totalKeywords, totalTemplates, totalTrackableLinks } from '../services/project-broadcast.js'
 import * as users from '../users.js'
 
@@ -27,30 +27,29 @@ router.get('/', async function (req, res, next) {
   }
 })
 
-router.get('/connection', async function (req, res, next) {
-  const isValidParams = areParamsValid(req.query)
-  if (!isValidParams) return res.status(401).send('Invalid request')
+router.get('/connection', isValidRequest, async function (req, res, next) {
   const user = users.findById(req.query.pcuid)
   const apiKey = await apiKeyForUser(user)
   users.updateUser(user, { apiKey })
   res.render('connect')
 })
 
-router.post('/hooks/connected', function (req, res, next) {
-  const isValidParams = areParamsValid(req.body)
-  if (!isValidParams) return res.status(401).send('Invalid request')
+router.post('/hooks/connected', isValidRequest, function (req, res, next) {
   const { pcuid, apiKey } = req.body
   users.updateUser(pcuid, { apiKey })
   console.log(`User connected: ${pcuid}, ${apiKey}`)
   res.status(204).send('Success')
 })
 
-router.post('/hooks/disconnected', function (req, res, next) {
-  const isValidParams = areParamsValid(req.body)
-  if (!isValidParams) return res.status(401).send('Invalid request')
+router.post('/hooks/disconnected', isValidRequest, function (req, res, next) {
   const { pcuid } = req.body
   users.updateUser(pcuid, { apiKey: undefined })
   console.log(`User disconnected: ${pcuid}`)
+  res.status(204).send('Success')
+})
+
+router.post('/hooks/events', isValidRequest, function (req, res, next) {
+  console.log(req.body)
   res.status(204).send('Success')
 })
 
