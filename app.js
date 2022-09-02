@@ -27,7 +27,11 @@ app.set('view engine', 'ejs')
 app.use(logger('dev'))
 app.use(express.json({
   verify (req, res, buf) {
-    req.rawBody = buf.toString()
+    const pbSignatureHeader = req.get('X-PB-Signature')
+    if (pbSignatureHeader) {
+      // need the rawBody to calculate the signature
+      req.rawBody = buf
+    }
   }
 }))
 app.use(express.urlencoded({ extended: false }))
