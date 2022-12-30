@@ -3,6 +3,7 @@
   "partnerId": "",
   "signingKey": "",
   "integrationKey": "",
+  "baseConfigurationUrl": "https://app.projectbroadcast.com/integrations/",
   "baseConnectUrl": "https://app.projectbroadcast.com/integrations/",
   "baseApiUrl": "https://app.projectbroadcast.com/api/v1/"
 }

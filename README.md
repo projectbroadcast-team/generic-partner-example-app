@@ -8,7 +8,7 @@ There are three configuration items you'll need:
 * signingKey
 * integrationKey
 
-With these three things, copy the `config/default.json` to `config/local-development.json` file and fill it in. You may also need to change the `baseConnectUrl` and `baseApiUrl` if you're connecting to a non-production environment.
+With these three things, copy the `config/default.json` to `config/local-development.json` file and fill it in. You may also need to change the `baseConfigurationUrl`, `baseConnectUrl`, and `baseApiUrl` if you're connecting to a non-production environment.
 
 Once setup and running (`npm start`) you'll be presented with a list of users you can "login" as. From there you can kick off a request to connect that user to a project broadcast user. Once connected, some API requests will be made to display some data.
 
