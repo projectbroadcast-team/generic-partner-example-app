@@ -1,16 +1,54 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Generic Partner Example App</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>Users</h1>
-    <% users.forEach((user) => { %>
-      <div style="padding-bottom: 1rem; border-bottom: 1px solid #000;">
-        <p><%= user.id %>: <%= user.firstName %> <%= user.lastName %> (<%= user.email %>)</p>
-        <a href="/login/<%= user.id %>">Login as this user</a>
+<%- include('partials/head', { title: 'Users - PB Partner Test App' }) %>
+
+<h1>Test Users</h1>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="error"><%= error %></div>
+<% } %>
+
+<% if (typeof success !== 'undefined' && success) { %>
+  <div class="success"><%= success %></div>
+<% } %>
+
+<section>
+  <h2>Add New User</h2>
+  <form method="POST" action="/users">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" required>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <button type="submit">Add User</button>
+  </form>
+</section>
+
+<section>
+  <h2>Existing Users (<%= users.length %>)</h2>
+  <% users.forEach((user) => { %>
+    <div class="user-card">
+      <div>
+        <strong><%= user.firstName %> <%= user.lastName %></strong><br>
+        <code><%= user.id %></code> &middot; <%= user.email %>
+        <% if (user.apiKey) { %>
+          <span style="color: green;">✓ Connected</span>
+        <% } %>
       </div>
-    <% }) %>
-  </body>
+      <div class="actions">
+        <a href="/login/<%= user.id %>">Login</a>
+        <form method="POST" action="/users/<%= user.id %>/delete" class="inline-form">
+          <button type="submit" class="btn-danger" onclick="return confirm('Delete this user?')">Delete</button>
+        </form>
+      </div>
+    </div>
+  <% }) %>
+</section>
+
+</body>
 </html>

@@ -1,8 +1,0 @@
-{
-  "port": "3003",
-  "partnerId": "",
-  "signingKey": "",
-  "integrationKey": "",
-  "baseConnectUrl": "https://app.projectbroadcast.com/integrations/",
-  "baseApiUrl": "https://app.projectbroadcast.com/api/v1/"
-}
