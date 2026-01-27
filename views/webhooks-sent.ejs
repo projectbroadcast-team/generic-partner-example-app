@@ -1,0 +1,74 @@
+<%- include('partials/head', { title: 'Webhooks Sent - PB Partner Test App' }) %>
+
+<h1>Webhooks Sent (from PB API)</h1>
+<p>These are webhook events that Project Broadcast has attempted to send to us.</p>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="error"><%= error %></div>
+<% } %>
+
+<% if (typeof success !== 'undefined' && success) { %>
+  <div class="success"><%= success %></div>
+<% } %>
+
+<% if (events && events.length > 0) { %>
+  <% events.forEach(event => { %>
+    <div style="border: 1px solid #ddd; border-radius: 4px; padding: 1rem; margin-bottom: 1rem; background: #fafafa;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <strong style="font-size: 1.1em;"><%= event.eventType %></strong>
+        <div>
+          <span style="padding: 0.2em 0.5em; border-radius: 3px; font-size: 0.85em; background: <%= event.status === 'success' ? '#d4edda' : event.status === 'failed' ? '#f8d7da' : '#fff3cd' %>; color: <%= event.status === 'success' ? '#155724' : event.status === 'failed' ? '#721c24' : '#856404' %>;"><%= event.status %></span>
+          <form method="POST" action="/admin/webhooks/<%= event._id %>/replay" class="inline-form" style="margin-left: 0.5rem;">
+            <button type="submit">Replay</button>
+          </form>
+        </div>
+      </div>
+      <dl style="margin: 0; font-size: 0.9em;">
+        <dt>Event ID</dt>
+        <dd><code><%= event._id %></code></dd>
+        <dt>PCUID</dt>
+        <dd><code><%= event.pcuid || 'N/A' %></code></dd>
+        <dt>Idempotency Key</dt>
+        <dd><code><%= event.idempotencyKey %></code></dd>
+        <dt>Created At</dt>
+        <dd><%= event.createdAt %></dd>
+        <% if (event.replayOf) { %>
+          <dt>Replay Of</dt>
+          <dd><code><%= event.replayOf %></code></dd>
+        <% } %>
+        <dt>Payload</dt>
+        <dd><pre style="margin: 0; white-space: pre-wrap; word-break: break-all;"><%= JSON.stringify(event.payload, null, 2) %></pre></dd>
+        <% if (event.responses && event.responses.length > 0) { %>
+          <dt>Delivery Attempts (<%= event.responses.length %>)</dt>
+          <dd>
+            <% event.responses.forEach((resp, i) => { %>
+              <div style="background: #f0f0f0; padding: 0.5rem; margin-top: 0.5rem; border-radius: 3px;">
+                <strong>Attempt <%= i + 1 %>:</strong>
+                Status <%= resp.statusCode %>, <%= resp.duration %>ms
+                <% if (resp.error) { %><br><span style="color: #c00;">Error: <%= resp.error %></span><% } %>
+                <% if (resp.body) { %><br><code style="font-size: 0.85em;"><%= resp.body.substring(0, 200) %><%= resp.body.length > 200 ? '...' : '' %></code><% } %>
+              </div>
+            <% }) %>
+          </dd>
+        <% } %>
+      </dl>
+    </div>
+  <% }) %>
+
+  <% if (paging) { %>
+    <div style="margin-top: 1rem;">
+      <% if (paging.page > 1) { %>
+        <a href="?page=<%= paging.page - 1 %>">← Previous</a>
+      <% } %>
+      <span style="margin: 0 1rem;">Page <%= paging.page %> of <%= paging.pages %></span>
+      <% if (paging.page < paging.pages) { %>
+        <a href="?page=<%= paging.page + 1 %>">Next →</a>
+      <% } %>
+    </div>
+  <% } %>
+<% } else { %>
+  <p>No webhook events found.</p>
+<% } %>
+
+</body>
+</html>

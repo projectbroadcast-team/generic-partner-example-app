@@ -1,0 +1,7 @@
+export default {
+  semi: false,
+  singleQuote: true,
+  quoteProps: 'consistent',
+  trailingComma: 'all',
+  printWidth: 100,
+}
