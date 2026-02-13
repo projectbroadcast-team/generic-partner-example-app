@@ -1,3 +1,19 @@
+# Dependencies
 node_modules
-config/local*
-users.json
+
+# Environment
+.env
+.env.local
+
+# Data files (regenerated on startup)
+data/*.json
+
+# Editor
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

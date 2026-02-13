@@ -1,0 +1,37 @@
+<%- include('partials/head', { title: 'Webhooks Received - PB Partner Test App' }) %>
+
+<h1>Webhooks Received</h1>
+<p>These are webhook events we have received from Project Broadcast.</p>
+
+<% if (typeof success !== 'undefined' && success) { %>
+  <div class="success"><%= success %></div>
+<% } %>
+
+<% if (events && events.length > 0) { %>
+  <div style="margin-bottom: 1rem;">
+    <form method="POST" action="/admin/webhooks-received/clear" style="display: inline;" onsubmit="return confirm('Are you sure you want to clear all received webhooks?');">
+      <button type="submit" class="btn-danger">Clear All (<%= events.length %>)</button>
+    </form>
+  </div>
+  <% events.slice().reverse().forEach((event, index) => { %>
+    <div style="border: 1px solid #ddd; border-radius: 4px; padding: 1rem; margin-bottom: 1rem; background: #fafafa;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <strong style="font-size: 1.1em;"><%= event.eventType %></strong>
+        <span style="color: #666; font-size: 0.9em;"><%= event.receivedAt %></span>
+      </div>
+      <dl style="margin: 0; font-size: 0.9em;">
+        <dt>PCUID</dt>
+        <dd><code><%= event.pcuid || 'N/A' %></code></dd>
+        <dt>Idempotency Key</dt>
+        <dd><code><%= event.idempotencyKey %></code></dd>
+        <dt>Data</dt>
+        <dd><pre style="margin: 0; white-space: pre-wrap; word-break: break-all;"><%= JSON.stringify(event.data, null, 2) %></pre></dd>
+      </dl>
+    </div>
+  <% }) %>
+<% } else { %>
+  <p>No webhooks received yet.</p>
+<% } %>
+
+</body>
+</html>
