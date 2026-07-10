@@ -68,7 +68,7 @@ router.get('/', async (req, res, next) => {
  * Create a new user
  */
 router.post('/users', (req, res) => {
-  const { firstName, lastName, email } = req.body
+  const { firstName, lastName, email } = req.body ?? {}
 
   if (!firstName || !lastName || !email) {
     return res.redirect('/?error=All fields are required')
