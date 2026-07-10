@@ -9,11 +9,7 @@
 import { JSONFileSyncPreset } from 'lowdb/node'
 
 export type WebhookEventType =
-  | 'user-connect'
-  | 'user-disconnect'
-  | 'trackable-link-click'
-  | 'landing-page-view'
-  | 'test'
+  'user-connect' | 'user-disconnect' | 'trackable-link-click' | 'landing-page-view' | 'test'
 
 export interface ReceivedWebhookEvent {
   idempotencyKey: string

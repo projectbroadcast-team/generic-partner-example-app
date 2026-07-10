@@ -53,8 +53,8 @@ function isValidTimestamp(
  * Parameters must include `timestamp` (ms) and `signature`.
  * Signature is HMAC-SHA256 of sorted param values joined by ':'.
  */
-export function areParamsValid(params: Record<string, unknown>): boolean {
-  const { timestamp, signature } = params as { timestamp?: string; signature?: string }
+export function areParamsValid(params: Record<string, unknown> | undefined): boolean {
+  const { timestamp, signature } = (params ?? {}) as { timestamp?: string; signature?: string }
 
   if (!timestamp || !signature) {
     return false
