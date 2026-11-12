@@ -1,0 +1,38 @@
+name: workflow-checks
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/**']
+  pull_request:
+    paths: ['.github/workflows/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Fails when .github/workflows/actions.lock is out of sync with the workflows, or a locked
+  # pin no longer verifies upstream. Any workflow edit needs a local `gh actions-lock` before
+  # it will pass.
+  verify:
+    runs-on: ubuntu-slim
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - run: gh extension install github/gh-actions-lock --pin v0.4.1
+      - run: gh actions-lock --verify
+
+  zizmor:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      # 1.32.0 is the first release that understands actions.lock; older ones flag every tag pin.
+      - run: pipx run zizmor==1.32.0 --format github .github/workflows
